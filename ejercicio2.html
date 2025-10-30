@@ -3,15 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejercicio 2 - Alert</title>
+    <title>Demostración de Output en Javascript</title>
 </head>
 <body>
-    <h1>Ejercicio 2</h1>
-    <p>Esta página mostrará una alerta al cargar.</p>
+    <h1>Demostración de Output en Javascript</h1>
+    
+    <!-- Botón para alerta con nombre -->
+    <button onclick="mostrarAlerta()">Mostrar mi nombre</button>
+    
+    <!-- Párrafo y botón para actualizar texto -->
+    <p id="parrafoActualizable"></p>
+    <button onclick="actualizarParrafo()">Actualizar párrafo</button>
 
     <script>
-        // Mensaje que se muestra en una alerta al cargar la página
-        alert("¡Bienvenido! Esta es una alerta de JavaScript.");
+        function mostrarAlerta() {
+            alert("Adrian Flores");
+        }
+
+        function actualizarParrafo() {
+            document.getElementById("parrafoActualizable").innerHTML = "Texto actualizado con Javascript!";
+        }
     </script>
 </body>
 </html>
