@@ -1,0 +1,77 @@
+name: Autograding
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-html:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: |
+        npm install -g html-validator
+        npm install -g jsdom
+        
+    - name: Test ejercicio1.html
+      run: |
+        # Verificar que el archivo existe y tiene contenido
+        if [ ! -f "ejercicio1.html" ]; then
+          echo "❌ ejercicio1.html no existe"
+          exit 1
+        fi
+        
+        # Verificar estructura básica
+        if ! grep -q "¡Texto actualizado con Javascript!" ejercicio1.html; then
+          echo "❌ ejercicio1.html no contiene el texto requerido"
+          exit 1
+        fi
+        
+        if ! grep -q "onclick" ejercicio1.html; then
+          echo "❌ ejercicio1.html no tiene evento onclick"
+          exit 1
+        fi
+        
+        echo "✅ ejercicio1.html pasa las pruebas básicas"
+        
+    - name: Test ejercicio2.html
+      run: |
+        # Verificar que el archivo existe
+        if [ ! -f "ejercicio2.html" ]; then
+          echo "❌ ejercicio2.html no existe"
+          exit 1
+        fi
+        
+        # Verificar estructura básica
+        if ! grep -q "Demostración de Output en Javascript" ejercicio2.html; then
+          echo "❌ ejercicio2.html no tiene el título requerido"
+          exit 1
+        fi
+        
+        if ! grep -q "Adrian Flores" ejercicio2.html; then
+          echo "❌ ejercicio2.html no tiene tu nombre en la alerta"
+          exit 1
+        fi
+        
+        if ! grep -q "Texto actualizado con Javascript!" ejercicio2.html; then
+          echo "❌ ejercicio2.html no contiene el texto de actualización"
+          exit 1
+        fi
+        
+        echo "✅ ejercicio2.html pasa las pruebas básicas"
+        
+    - name: Final validation
+      run: |
+        echo "🎉 Todos los ejercicios pasaron las validaciones básicas"
+        echo "Los archivos HTML tienen la estructura correcta"
